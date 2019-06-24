@@ -33,10 +33,10 @@ class Network:
         except:
             print("Error while connecting")
 
-    def send(self, data: str):
+    def send(self, data):
         try:
             self.client.send(pickle.dumps(data))
-            return pickle.loads(self.client.recv(2048))
+            return pickle.loads(self.client.recv(2048*2))
         except socket.error as e:
             print(e)
 
@@ -47,23 +47,20 @@ def update_window(player1: Tank, player2: Tank) -> None:
     player1.draw(window)
     player2.draw(window)
 
+
     pygame.display.update()
 
 
 def game_loop():
+    clock = pygame.time.Clock()
     running = True
     network = Network()
     player = network.get_player()
-    last_frame_time = time.time()
     while running:
         # Only run the game loop fps times per second
-        current_time = time.time()
-        sleep_time = 1. / fps - (current_time - last_frame_time)
-        if sleep_time > 0:
-            time.sleep(sleep_time)
-        last_frame_time = time.time()
-
+        clock.tick(fps)
         player2 = network.send(player)
+
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:

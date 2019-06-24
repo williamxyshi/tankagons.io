@@ -27,7 +27,7 @@ def threaded_client(connection, player):
 
     while connected:
         try:
-            data = pickle.loads(connection.recieve(2048))  # Increasing bits lowers speed
+            data = pickle.loads(connection.recv(4096))  # Increasing bits lowers speed
             players[player] = data
 
             if not data:
@@ -38,8 +38,6 @@ def threaded_client(connection, player):
                     reply = players[0]
                 else:
                     reply = players[1]
-                print("Received ", data)
-                print("Sending ", reply)
 
             connection.sendall(pickle.dumps(reply))
 
