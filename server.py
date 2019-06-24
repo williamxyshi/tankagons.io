@@ -2,28 +2,20 @@ import socket
 from _thread import *
 from tank import Tank
 import pickle
-from typing import Tuple
+from random import randint
 
 server = "192.168.0.113"  # IPV4 Address
-port = 5555
+port = 5555  # 5555
 
-s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-
-try:
-    s.bind((server, port))
-except socket.error as e:
-    str(e)
-
-s.listen(2)  # Two connections maximum (2 players)
-print("Listening for connection")
-
-players = [Tank(0, 0, 5, (0, 255, 0)), Tank(100, 100, 5, (0, 0, 255))]
+players = []
 
 
 def threaded_client(connection, player):
-    print("connected player ", player)
+    print("connected to player", player)
     connected = True
-    connection.send(pickle.dumps(players[player]))
+    new_tank = Tank(100, 100, 10, (randint(0, 255), randint(0, 255), randint(0, 255)))
+    players.append(new_tank)
+    connection.send(pickle.dumps(new_tank))
 
     while connected:
         try:
@@ -34,23 +26,33 @@ def threaded_client(connection, player):
                 print("Disconnected")
                 break
             else:
-                if player == 1:
-                    reply = players[0]
-                else:
-                    reply = players[1]
+                reply = players
 
             connection.sendall(pickle.dumps(reply))
 
         except:
             connected = False
-    print("Lost connection")
+    print("Lost connection to player ", player)
     connection.close()
 
 
-current_player = 0
-while True:
-    connection, address = s.accept()
-    print("Connected to", address)
+if __name__ == "__main__":
+    # Create the server socket
+    s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+    try:
+        s.bind((server, port))
+    except socket.error as e:
+        str(e)
 
-    start_new_thread(threaded_client, (connection, current_player))
-    current_player += 1
+    # Enable socket to accept connections
+    s.listen(0)
+    print("Listening...")
+    listening = True
+
+    current_player = 0
+    while listening:
+        connection, address = s.accept()
+        print("Connected to", address)
+
+        start_new_thread(threaded_client, (connection, current_player))
+        current_player += 1

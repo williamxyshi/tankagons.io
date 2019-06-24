@@ -1,9 +1,6 @@
 import pygame
 import socket
 import pickle
-import time
-from tank import Tank
-from typing import Tuple
 
 server = "192.168.0.113"  # IPV4 Address
 port = 5555
@@ -41,12 +38,11 @@ class Network:
             print(e)
 
 
-def update_window(player1: Tank, player2: Tank) -> None:
+def update_window(players) -> None:
     # Wipes the screen
     window.fill((0, 0, 0))
-    player1.draw(window)
-    player2.draw(window)
-
+    for player in players:
+        player.draw(window)
 
     pygame.display.update()
 
@@ -59,15 +55,14 @@ def game_loop():
     while running:
         # Only run the game loop fps times per second
         clock.tick(fps)
-        player2 = network.send(player)
-
 
         for event in pygame.event.get():
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
         player.move()
-        update_window(player, player2)
+        players = network.send(player)
+        update_window(players)
 
 
 if __name__ == "__main__":
