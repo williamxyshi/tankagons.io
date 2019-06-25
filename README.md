@@ -4,7 +4,11 @@ a game worked on by me and masea3439
 Vision:
 2D Sins of a Solar Empire, but with TANK SHIPS!!!
 
+Tasks completed:
+-Multiplayer support
+
 TODO in terms of priority:
+
 -Mouse tracking + hitboxes + shooting
 -player disconnecting + sprites + classes
 
