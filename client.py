@@ -9,7 +9,6 @@ width = 1440
 height = 900
 
 fps = 60
-pygame.display.set_caption("Tankagons")
 graphics_handler = GraphicsHandler()
 
 

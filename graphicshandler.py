@@ -11,6 +11,7 @@ class GraphicsHandler:
 		self.y_offset = 0
 		self.sprites_container = SpritesContainer()
 		self.screen = pygame.display.set_mode((width, height))
+		pygame.display.set_caption("Tankagons")
 
 	def update_display(self, data, x_offset, y_offset):
 		self.x_offset = x_offset
@@ -22,6 +23,9 @@ class GraphicsHandler:
 	def draw_tanks(self, tank_data):
 		for tank in tank_data.values():
 			self.draw_tank_body(tank.x - self.x_offset + width//2, tank.y - self.y_offset + height//2, tank.body_rotation, tank.tank_body_model)
+
+	def draw_tank_turret(self, x :int, y :int, turret_model :str):
+		self.screen.blit(self.sprites_container.tank_turret_sprites[turret_model], (x,y))
 
 	def draw_tank_body(self, x: int, y: int, body_rotation: float, body_model: str):
 		body_image = self.sprites_container.tank_body_sprites[body_model]
