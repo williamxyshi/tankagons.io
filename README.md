@@ -4,7 +4,13 @@ a game worked on by me and masea3439
 Vision:
 2D Sins of a Solar Empire, but with TANK SHIPS!!!
 
-Theres a good chance this is gonna be done in unity
+TODO in terms of priority:
+-Mouse tracking + hitboxes + shooting
+-player disconnecting + sprites + classes
+
+-enemy's + AI
+
+
 
 colonize planets and harvest resources. Establish trade relations with other Tanknations. Piracy is common. Progression system. LAN multiplayer. 
 
