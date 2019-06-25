@@ -4,35 +4,36 @@ from tank import Tank
 import pickle
 from random import randint
 
-server = "192.168.0.113"  # IPV4 Address
+server = "25.3.219.121"  # IPV4 Address
 port = 5555  # 5555
 
-players = []
+data = {"tanks": {}}
 
 
-def threaded_client(connection, player):
-    print("connected to player", player)
+def threaded_client(connection, player_number):
+    print("connected to player", player_number)
     connected = True
     new_tank = Tank(100, 100, 10, (randint(0, 255), randint(0, 255), randint(0, 255)))
-    players.append(new_tank)
+    data["tanks"][player_number] = new_tank
     connection.send(pickle.dumps(new_tank))
 
     while connected:
         try:
-            data = pickle.loads(connection.recv(4096))  # Increasing bits lowers speed
-            players[player] = data
+            received_data = pickle.loads(connection.recv(4096))  # Increasing bits lowers speed
+            data["tanks"][player_number] = received_data
 
-            if not data:
+            if not received_data:
                 print("Disconnected")
                 break
             else:
-                reply = players
+                reply = data
 
             connection.sendall(pickle.dumps(reply))
 
         except:
             connected = False
-    print("Lost connection to player ", player)
+    data["tanks"].pop(player_number)
+    print("Lost connection to player ", player_number)
     connection.close()
 
 

@@ -2,7 +2,7 @@ import pygame
 import socket
 import pickle
 
-server = "192.168.0.113"  # IPV4 Address
+server = "25.3.219.121"  # IPV4 Address
 port = 5555
 
 fps = 60
@@ -38,11 +38,11 @@ class Network:
             print(e)
 
 
-def update_window(players) -> None:
+def update_window(data) -> None:
     # Wipes the screen
     window.fill((0, 0, 0))
-    for player in players:
-        player.draw(window)
+    for tank in data["tanks"].values():
+        tank.draw(window)
 
     pygame.display.update()
 
@@ -61,8 +61,8 @@ def game_loop():
                 running = False
                 pygame.quit()
         player.move()
-        players = network.send(player)
-        update_window(players)
+        data = network.send(player)
+        update_window(data)
 
 
 if __name__ == "__main__":
