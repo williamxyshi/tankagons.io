@@ -6,11 +6,13 @@ Vision:
 
 Tasks completed:
 -Multiplayer support
+-basic body sprites
+-player disconnecting
 
 TODO in terms of priority:
 
 -Mouse tracking + hitboxes + shooting
--player disconnecting + sprites + classes
+-classes
 
 -enemy's + AI
 
