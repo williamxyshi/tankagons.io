@@ -1,20 +1,15 @@
 # tankagons.io
-a game worked on by me and masea3439 
+a game worked on by me and masea3439
 
-Vision:
-2D Sins of a Solar Empire, but with TANK SHIPS!!!
+Vision: 2D Sins of a Solar Empire, but with TANK SHIPS!!!
 
-Tasks completed:
--Multiplayer support
+Tasks completed: -Multiplayer support -basic body sprites -player disconnecting
 
 TODO in terms of priority:
 
--Mouse tracking + hitboxes + shooting
--player disconnecting + sprites + classes
+-Mouse tracking + hitboxes + shooting -classes
 
 -enemy's + AI
-
-
 
 colonize planets and harvest resources. Establish trade relations with other Tanknations. Piracy is common. Progression system. LAN multiplayer. 
 
