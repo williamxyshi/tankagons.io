@@ -4,13 +4,10 @@ import pickle
 from sprites import SpritesContainer
 from graphicshandler import GraphicsHandler
 
-server = "25.3.219.121"  # IPV4 Address
+server = "25.3.163.186"  # IPV4 Address
 port = 5555
 
 fps = 60
-width = 1440
-height = 900
-window = pygame.display.set_mode((width, height))
 pygame.display.set_caption("Tankagons")
 graphics_handler = GraphicsHandler()
 
@@ -40,13 +37,13 @@ class Network:
             print(e)
 
 
-def update_window(data) -> None:
+"""def update_tanks(data) -> None:
     # Wipes the screen
     window.fill((0, 0, 0))
     for tank in data["tanks"].values():
         tank.draw(window)
 
-    pygame.display.update()
+    pygame.display.update()"""
 
 
 def game_loop():
@@ -54,6 +51,7 @@ def game_loop():
     running = True
     network = Network()
     player = network.get_player()
+
     while running:
         # Only run the game loop fps times per second
         clock.tick(fps)
@@ -64,7 +62,10 @@ def game_loop():
                 pygame.quit()
         player.move()
         data = network.send(player)
-        update_window(data)
+
+        graphics_handler.update_display( data )
+
+
 
 
 if __name__ == "__main__":

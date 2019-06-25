@@ -1,4 +1,5 @@
 import pygame
+import os
 
 class SpritesContainer(pygame.sprite.Sprite):
         def __init__(self):
