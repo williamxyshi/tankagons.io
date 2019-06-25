@@ -16,6 +16,9 @@ class GraphicsHandler:
 	def draw_tank_body(self, x :int, y :int, body_model :str ):
 		self.screen.blit(self.sprites_container.tank_body_sprites[body_model],  (x, y))
 
+	def draw_tank_turret(self, x :int, y :int, turret_model :str):
+		self.screen.blit(self.sprites_container.tank_turrent_sprites[turret_model], (x,y))
+
 	def update_tank_body(self, data):
 		for tank in data.values():
 			self.draw_tank_body( tank.x, tank.y, tank.tank_body_model)
