@@ -4,7 +4,7 @@ from tank import Tank
 import pickle
 from random import randint
 
-server = "25.3.163.186"  # IPV4 Address
+server = "25.3.219.121"  # IPV4 Address
 port = 5555  # 5555
 
 data = {"tanks": {}}
