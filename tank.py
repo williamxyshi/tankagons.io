@@ -1,5 +1,6 @@
 import pygame
 from typing import Tuple
+from random import randint
 
 
 class Tank:
