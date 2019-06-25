@@ -11,6 +11,7 @@ class GraphicsHandler:
 		self.y_offset = 0
 		self.sprites_container = SpritesContainer()
 		self.screen = pygame.display.set_mode((width, height))
+		pygame.display.set_caption("Tankagons")
 
 	def update_display(self, data, x_offset, y_offset):
 		self.x_offset = x_offset
