@@ -1,7 +1,6 @@
 import pygame
 import socket
 import pickle
-from sprites import SpritesContainer
 from graphicshandler import GraphicsHandler
 
 server = "25.3.219.121"  # IPV4 Address
@@ -12,6 +11,7 @@ height = 900
 fps = 60
 pygame.display.set_caption("Tankagons")
 graphics_handler = GraphicsHandler()
+
 
 class Network:
     def __init__(self) -> None:
@@ -58,7 +58,7 @@ def game_loop():
         player.move()
         data = network.send(player)
 
-        graphics_handler.update_display( data )
+        graphics_handler.update_display(data, player.x, player.y)
 
 
 if __name__ == "__main__":

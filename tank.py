@@ -1,6 +1,6 @@
 import pygame
 from typing import Tuple
-from math import sin, cos, atan2
+from math import sin, cos, atan2, pi
 
 
 class Tank:
@@ -10,6 +10,7 @@ class Tank:
         self.radius = radius
         self.color = color
         self.speed = 3
+        self.turn_speed = 0.05
         self.tank_body_model = 'basic'
         self.body_rotation = 0
         self.turret_rotation = 0
@@ -21,17 +22,21 @@ class Tank:
     def move(self) -> None:
         keys = pygame.key.get_pressed()
 
-        if keys[pygame.K_LEFT]:
-            self.x -= self.speed
+        if keys[pygame.K_w]:
+            self.x += self.speed * cos(self.body_rotation)
+            self.y -= self.speed * sin(self.body_rotation)
 
-        if keys[pygame.K_RIGHT]:
-            self.x += self.speed
+        if keys[pygame.K_d]:
+            self.body_rotation -= self.turn_speed
+            if self.body_rotation < 0:
+                self.body_rotation = self.body_rotation + 2 * pi
+            self.body_rotation = self.body_rotation % (2 * pi)
 
-        if keys[pygame.K_UP]:
-            self.y -= self.speed
-
-        if keys[pygame.K_DOWN]:
-            self.y += self.speed
+        if keys[pygame.K_a]:
+            self.body_rotation += self.turn_speed
+            if self.body_rotation < 0:
+                self.body_rotation = self.body_rotation + 2 * pi
+            self.body_rotation = self.body_rotation % (2 * pi)
 
     def update_tank_body(self, x: str) -> None:
         self.tank_body_model = x
