@@ -1,14 +1,15 @@
 import pygame
 import socket
 import pickle
+from projectiles import Bullet
 from graphicshandler import GraphicsHandler
+import os
 
-server = "25.3.163.186"  # IPV4 Address
+server = "25.3.163.186" #input("enter ipv4 address: ") IPV4 Address
 port = 5555
 width = 1440
 height = 900
 
-fps = 60
 graphics_handler = GraphicsHandler()
 
 
@@ -33,19 +34,22 @@ class Network:
     def send(self, data):
         try:
             self.client.send(pickle.dumps(data))
-            return pickle.loads(self.client.recv(2048*2))
+            return pickle.loads(self.client.recv(2048*5))
         except socket.error as e:
             print(e)
 
 
 def game_loop():
+    fps = 60
     clock = pygame.time.Clock()
     running = True
     network = Network()
     player = network.get_player()
 
+    turret_reload_speed = 90
+    turret_reload_cooldown = 0
+
     while running:
-        # Only run the game loop fps times per second
         clock.tick(fps)
 
         for event in pygame.event.get():
@@ -54,9 +58,20 @@ def game_loop():
                 pygame.quit()
         mouse_position = pygame.mouse.get_pos()
         player.update_turret_rotation((mouse_position[0] - width//2, mouse_position[1] - height//2))
-        player.move()
-        data = network.send(player)
+        keys = pygame.key.get_pressed()
+        if keys is not None:
+            player.move(keys)
 
+        mouse_pressed = pygame.mouse.get_pressed()
+        new_bullet = None
+        if mouse_pressed[0] and turret_reload_cooldown == 0:
+            new_bullet = Bullet(player.x, player.y, player.turret_rotation)
+            turret_reload_cooldown = turret_reload_speed
+
+        if turret_reload_cooldown != 0:
+            turret_reload_cooldown -= 1
+
+        data = network.send((player, new_bullet))
         graphics_handler.update_display(data, player.x, player.y)
 
 
