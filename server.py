@@ -5,7 +5,7 @@ import pickle
 from random import randint
 import pygame
 
-server = "172.31.130.180"  # IPV4 Address
+server = "25.3.163.186"  # IPV4 Address
 port = 5555  # 5555
 
 data = {"tanks": {}, "bullets": []}
@@ -47,7 +47,8 @@ def server_loop():
     while running:
         clock.tick(fps)
         for bullet in data["bullets"]:
-            bullet.update()
+            if bullet.update():
+                data["bullets"].remove(bullet)
 
 
 if __name__ == "__main__":
