@@ -21,7 +21,7 @@ TODO in terms of priority:
 Spawn into a procedurely generated map and fight other players for domination. Protect your spawnpoint while destroying those of your enemies. Farm mobs to increase in strength. 
 
 In game footage:
-![alt text](TankagonsNewProofofConcept.png)
+![alt text](TankagonsNewProofOfConcept.png)
 
 
 Outdated Proof of concept:
