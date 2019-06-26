@@ -53,7 +53,7 @@ def game_loop():
                 running = False
                 pygame.quit()
         mouse_position = pygame.mouse.get_pos()
-        player.update_turret_rotation((mouse_position[0] - height//2, mouse_position[1] - width//2))
+        player.update_turret_rotation((mouse_position[0] - width//2, mouse_position[1] - height//2))
         player.move()
         data = network.send(player)
 
