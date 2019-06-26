@@ -13,7 +13,7 @@ data = {"tanks": {}}
 def threaded_client(connection, player_number):
     print("connected to player", player_number)
     connected = True
-    new_tank = Tank(100, 100, 10, (randint(0, 255), randint(0, 255), randint(0, 255)))
+    new_tank = Tank(100, 100, 10, (randint(0, 255), randint(0, 255), randint(0, 255)), 'basic', 'basic')
     data["tanks"][player_number] = new_tank
     connection.send(pickle.dumps(new_tank))
 
