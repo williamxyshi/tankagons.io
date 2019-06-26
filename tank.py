@@ -1,17 +1,18 @@
 import pygame
 from typing import Tuple
-from math import sin, cos, atan2, pi
+from math import sin, cos, atan2, pi, atan
 
 
 class Tank:
-    def __init__(self, x: int, y: int, radius: int, color: Tuple[int, int, int]) -> None:
+    def __init__(self, x: int, y: int, radius: int, color: Tuple[int, int, int], tank_body_model: str, tank_turret_model: str) -> None:
         self.x = x
         self.y = y
         self.radius = radius
         self.color = color
         self.speed = 3
         self.turn_speed = 0.05
-        self.tank_body_model = 'basic'
+        self.tank_body_model = tank_body_model
+        self.tank_turret_model = tank_turret_model
         self.body_rotation = 0
         self.turret_rotation = 0
 
@@ -40,5 +41,5 @@ class Tank:
         self.tank_body_model = x
 
     def update_turret_rotation(self, mouse_pos: Tuple[int, int]) -> None:
-        self.turret_rotation = atan2(mouse_pos[1], mouse_pos[0])
+        self.turret_rotation = -atan2(mouse_pos[1], mouse_pos[0])
 

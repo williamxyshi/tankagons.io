@@ -66,6 +66,8 @@ def game_loop():
 
         data = network.send((player, new_bullet))
 
+        player.update_turret_rotation((mouse_position[0] - width//2, mouse_position[1] - height//2))
+
         graphics_handler.update_display(data, player.x, player.y)
 
 
