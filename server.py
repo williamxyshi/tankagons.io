@@ -3,12 +3,12 @@ from _thread import *
 from tank import Tank
 import pickle
 from random import randint
+import pygame
 
-server = "25.3.219.121"  # IPV4 Address
+server = "172.31.130.180"  # IPV4 Address
 port = 5555  # 5555
 
-data = {"tanks": {}}
-
+data = {"tanks": {}, "bullets": []}
 
 def threaded_client(connection, player_number):
     print("connected to player", player_number)
@@ -20,7 +20,9 @@ def threaded_client(connection, player_number):
     while connected:
         try:
             received_data = pickle.loads(connection.recv(4096))  # Increasing bits lowers speed
-            data["tanks"][player_number] = received_data
+            data["tanks"][player_number] = received_data[0]
+            if received_data[1]:
+                data["bullets"].append(received_data[1])
 
             if not received_data:
                 print("Disconnected")
@@ -32,9 +34,20 @@ def threaded_client(connection, player_number):
 
         except:
             connected = False
+
     data["tanks"].pop(player_number)
     print("Lost connection to player ", player_number)
     connection.close()
+
+
+def server_loop():
+    fps = 60
+    clock = pygame.time.Clock()
+    running = True
+    while running:
+        clock.tick(fps)
+        for bullet in data["bullets"]:
+            bullet.update()
 
 
 if __name__ == "__main__":
@@ -51,9 +64,11 @@ if __name__ == "__main__":
     listening = True
 
     current_player = 0
+    start_new_thread(server_loop, ())
     while listening:
         connection, address = s.accept()
         print("Connected to", address)
 
         start_new_thread(threaded_client, (connection, current_player))
         current_player += 1
+

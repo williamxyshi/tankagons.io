@@ -18,12 +18,23 @@ class GraphicsHandler:
 		self.y_offset = y_offset
 		self.screen.fill((0, 0, 0))
 		self.draw_tanks(data["tanks"])
+		self.draw_bullets(data["bullets"])
 		pygame.display.update()
 
 	def draw_tanks(self, tank_data):
 		for tank in tank_data.values():
 			self.draw_tank_body(tank.x - self.x_offset + width//2, tank.y - self.y_offset + height//2, tank.body_rotation, tank.tank_body_model)
 			self.draw_tank_turret(tank.x - self.x_offset + width//2, tank.y - self.y_offset + height//2, tank.turret_rotation, tank.tank_turret_model)
+
+	def draw_bullets(self, bullet_data):
+		for bullet in bullet_data:
+			self.draw_bullet(bullet.x - self.x_offset + width//2, bullet.y - self.y_offset + height//2, bullet.bullet_angle)
+
+	def draw_bullet(self, x: int, y: int, bullet_angle: int):
+		bullet_image = self.sprites_container.bullet_sprites['bullet']
+		bullet_image = pygame.transform.rotate(bullet_image, degrees(bullet_angle))
+		image_size = bullet_image.get_size()
+		self.screen.blit(bullet_image, (x - image_size[0] // 2, y - image_size[1] // 2))
 
 	def draw_tank_turret(self, x: int, y: int, turret_rotation: float, turret_model: str):
 		print(turret_rotation)
