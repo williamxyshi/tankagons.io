@@ -3,7 +3,7 @@ import socket
 import pickle
 from graphicshandler import GraphicsHandler
 
-server = "25.3.219.121"  # IPV4 Address
+server = "25.3.163.186"  # IPV4 Address
 port = 5555
 width = 1440
 height = 900
