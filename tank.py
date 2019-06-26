@@ -19,9 +19,7 @@ class Tank:
         pygame.draw.circle(window, self.color, (self.x, self.y), self.radius)
         pygame.draw.line(window, self.color, (self.x, self.y), (self.x+15*cos(self.turret_rotation), self.y+15*sin(self.turret_rotation)), 3)
 
-    def move(self) -> None:
-        keys = pygame.key.get_pressed()
-
+    def move(self, keys) -> None:
         if keys[pygame.K_w]:
             self.x += self.speed * cos(self.body_rotation)
             self.y -= self.speed * sin(self.body_rotation)

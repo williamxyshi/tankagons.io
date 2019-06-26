@@ -1,9 +1,10 @@
 import pygame
 import socket
 import pickle
+from projectiles import Bullet
 from graphicshandler import GraphicsHandler
 
-server = "25.3.219.121"  # IPV4 Address
+server = "25.3.163.186"  # IPV4 Address
 port = 5555
 width = 1440
 height = 900
@@ -54,8 +55,16 @@ def game_loop():
                 pygame.quit()
         mouse_position = pygame.mouse.get_pos()
         player.update_turret_rotation((mouse_position[0] - height//2, mouse_position[1] - width//2))
-        player.move()
-        data = network.send(player)
+        keys = pygame.key.get_pressed()
+        if keys is not None:
+            player.move(keys)
+
+        mouse_pressed = pygame.mouse.get_pressed()
+        new_bullet = None
+        if mouse_pressed is not None:
+            new_bullet = Bullet(player.x, player.y)
+
+        data = network.send((player, new_bullet))
 
         graphics_handler.update_display(data, player.x, player.y)
 
