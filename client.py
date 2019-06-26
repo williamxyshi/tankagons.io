@@ -3,8 +3,9 @@ import socket
 import pickle
 from projectiles import Bullet
 from graphicshandler import GraphicsHandler
+import os
 
-server = "25.3.163.186"  # IPV4 Address
+server = "25.3.163.186" #input("enter ipv4 address: ") IPV4 Address
 port = 5555
 width = 1440
 height = 900
@@ -49,7 +50,6 @@ def game_loop():
     turret_reload_cooldown = 0
 
     while running:
-        # Only run the game loop fps times per second
         clock.tick(fps)
 
         for event in pygame.event.get():

@@ -14,12 +14,15 @@ class GraphicsHandler:
 		pygame.display.set_caption("Tankagons")
 
 	def update_display(self, data, x_offset, y_offset):
+		self.draw_background()
 		self.x_offset = x_offset
 		self.y_offset = y_offset
-		self.screen.fill((0, 0, 0))
 		self.draw_tanks(data["tanks"])
 		self.draw_bullets(data["bullets"])
 		pygame.display.update()
+
+	def draw_background(self):
+		self.screen.blit(self.sprites_container.background_sprite, (0, 0))
 
 	def draw_tanks(self, tank_data):
 		for tank in tank_data.values():
