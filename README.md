@@ -15,8 +15,8 @@ Tasks completed:
 
 TODO in terms of priority:
 
--minimap
 -login page
+-minimap
 -hitboxes
 -classes
 -enemy's + AI
