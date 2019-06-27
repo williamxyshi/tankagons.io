@@ -53,7 +53,6 @@ def game_loop(server_address: str, player_name: str) -> None:
     turret_reload_cooldown = 0
 
     while running:
-        # Only run the game loop fps times per second
         clock.tick(fps)
 
         for event in pygame.event.get():

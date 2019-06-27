@@ -1,24 +1,30 @@
 # tankagons.io
 a game worked on by me and masea3439
 
-Vision: 
-2D Sins of a Solar Empire, but with TANK SHIPS!!!
-
 Tasks completed:
+
 -Multiplayer support
 -basic body sprites
 -player disconnecting
+-player centered movement
+-shooting
+-mouse tracking
 
 TODO in terms of priority:
 
--Mouse tracking + hitboxes + shooting
+-login page
+-minimap
+-hitboxes
 -classes
-
 -enemy's + AI
 
-colonize planets and harvest resources. Establish trade relations with other Tanknations. Piracy is common. Progression system. LAN multiplayer. 
+Spawn into a procedurely generated map and fight other players for domination. Protect your spawnpoint while destroying those of your enemies. Farm mobs to increase in strength. 
 
-Proof of concept:
+In game footage:
+![alt text](TankagonsNewProofOfConcept.png)
+
+
+Outdated Proof of concept:
 ![alt text](TankagonsProofofConcept.png)
 
 
