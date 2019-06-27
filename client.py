@@ -3,8 +3,8 @@ import socket
 import pickle
 from projectiles import Bullet
 from graphicshandler import GraphicsHandler
+from menu import create_menu
 
-server = "25.3.163.186"  # IPV4 Address
 port = 5555
 width = 1440
 height = 900
@@ -13,9 +13,9 @@ graphics_handler = GraphicsHandler()
 
 
 class Network:
-    def __init__(self) -> None:
+    def __init__(self, server_address: str) -> None:
         self.client = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
-        self.server = server
+        self.server = server_address
         self.port = port
         self.address = (self.server, self.port)
         self.player = self.connect()
@@ -29,6 +29,7 @@ class Network:
             return pickle.loads(self.client.recv(2048))
         except:
             print("Error while connecting")
+            return None
 
     def send(self, data):
         try:
@@ -38,12 +39,15 @@ class Network:
             print(e)
 
 
-def game_loop():
+def game_loop(server_address: str, player_name: str) -> None:
     fps = 60
     clock = pygame.time.Clock()
     running = True
-    network = Network()
+    network = Network(server_address)
     player = network.get_player()
+    if not player:
+        print("No response from server")
+        running = False
 
     turret_reload_speed = 90
     turret_reload_cooldown = 0
@@ -76,4 +80,6 @@ def game_loop():
 
 
 if __name__ == "__main__":
-    game_loop()
+    run_game, server_address, player_name = create_menu()
+    if run_game:
+        game_loop(server_address, player_name)

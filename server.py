@@ -5,10 +5,11 @@ import pickle
 from random import randint
 import pygame
 
-server = "25.3.163.186"  # IPV4 Address
+server = "192.168.0.113"  # IPV4 Address
 port = 5555  # 5555
 
 data = {"tanks": {}, "bullets": []}
+
 
 def threaded_client(connection, player_number):
     print("connected to player", player_number)

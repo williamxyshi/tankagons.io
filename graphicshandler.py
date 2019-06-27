@@ -37,7 +37,6 @@ class GraphicsHandler:
 		self.screen.blit(bullet_image, (x - image_size[0] // 2, y - image_size[1] // 2))
 
 	def draw_tank_turret(self, x: int, y: int, turret_rotation: float, turret_model: str):
-		print(turret_rotation)
 		turret_image = self.sprites_container.tank_turret_sprites[turret_model]
 		turret_image = pygame.transform.rotate(turret_image, degrees(turret_rotation))
 		image_size = turret_image.get_size()
