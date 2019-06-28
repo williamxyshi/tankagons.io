@@ -22,6 +22,9 @@ class GraphicsHandler:
 		self.draw_trees(trees)
 		pygame.display.update()
 
+	def draw_background(self):
+		self.screen.fill((0,0,0))#blit(self.sprites_container.background_sprite, (0, 0))
+
 	def draw_tanks(self, tank_data):
 		for tank in tank_data.values():
 			self.draw_tank_body(tank.x - self.x_offset + width//2, tank.y - self.y_offset + height//2, tank.body_rotation, tank.tank_body_model)

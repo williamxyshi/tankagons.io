@@ -5,18 +5,21 @@ from objects import Tree
 import pickle
 from random import randint
 import pygame
+import os
 
-server = "192.168.0.113"  # IPV4 Address
+server = "25.3.163.186"  # IPV4 Address
 port = 5555  # 5555
 
 data = {"tanks": {}, "bullets": []}
 trees = {}
 
+tank_body_image_size = pygame.image.load(os.path.join(os.path.dirname(__file__), 'assets\\basetank.png')).get_size()
+
 
 def threaded_client(connection, player_number):
     print("connected to player", player_number)
     connected = True
-    new_tank = Tank(100, 100, 10, (randint(0, 255), randint(0, 255), randint(0, 255)), 'basic', 'basic')
+    new_tank = Tank(100, 100, 10, (randint(0, 255), randint(0, 255), randint(0, 255)), 'basic', 'basic', tank_body_image_size[0], tank_body_image_size[1])
     data["tanks"][player_number] = new_tank
     connection.send(pickle.dumps((new_tank, trees)))
 
@@ -60,6 +63,13 @@ def server_loop():
         for bullet in data["bullets"]:
             if bullet.update():
                 data["bullets"].remove(bullet)
+
+        print(len(data["bullets"]))
+        for tank in data["tanks"].values():
+            for bullet in data["bullets"]:
+                if tank.detect_hit((bullet.x, bullet.y)):
+                    data["bullets"].remove(bullet)
+
 
 
 if __name__ == "__main__":
