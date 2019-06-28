@@ -29,6 +29,10 @@ class GraphicsHandler:
 		for tank in tank_data.values():
 			self.draw_tank_body(tank.x - self.x_offset + width//2, tank.y - self.y_offset + height//2, tank.body_rotation, tank.tank_body_model)
 			self.draw_tank_turret(tank.x - self.x_offset + width//2, tank.y - self.y_offset + height//2, tank.turret_rotation, tank.tank_turret_model)
+			hitbox = tank.hitbox
+			x_offset = -self.x_offset + width//2
+			y_offset = -self.y_offset + height//2
+			pygame.draw.polygon(self.screen, (0, 0, 0), [(hitbox.x1 + x_offset, hitbox.y1 + y_offset), (hitbox.x2 + x_offset, hitbox.y2 + y_offset), (hitbox.x3 + x_offset, hitbox.y3 + y_offset), (hitbox.x4 + x_offset, hitbox.y4 + y_offset)])
 
 	def draw_bullets(self, bullet_data):
 		for bullet in bullet_data:

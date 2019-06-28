@@ -7,7 +7,7 @@ from random import randint
 import pygame
 import os
 
-server = "25.3.163.186"  # IPV4 Address
+server = "25.11.222.189"  # IPV4 Address
 port = 5555  # 5555
 
 data = {"tanks": {}, "bullets": []}
@@ -64,12 +64,10 @@ def server_loop():
             if bullet.update():
                 data["bullets"].remove(bullet)
 
-        print(len(data["bullets"]))
         for tank in data["tanks"].values():
             for bullet in data["bullets"]:
                 if tank.detect_hit((bullet.x, bullet.y)):
                     data["bullets"].remove(bullet)
-
 
 
 if __name__ == "__main__":
