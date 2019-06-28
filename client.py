@@ -9,8 +9,6 @@ port = 5555
 width = 1440
 height = 900
 
-graphics_handler = GraphicsHandler()
-
 
 class Network:
     def __init__(self, server_address: str) -> None:
@@ -18,25 +16,22 @@ class Network:
         self.server = server_address
         self.port = port
         self.address = (self.server, self.port)
-        self.player = self.connect()
-
-    def get_player(self):
-        return self.player
 
     def connect(self):
         try:
             self.client.connect(self.address)
-            return pickle.loads(self.client.recv(2048))
+            return pickle.loads(self.client.recv(4096))
         except:
             print("Error while connecting")
-            return None
+            return None, None
 
     def send(self, data):
         try:
             self.client.send(pickle.dumps(data))
             return pickle.loads(self.client.recv(2048*5))
-        except socket.error as e:
-            print(e)
+        except:
+            print("Lost connection to server")
+            return None
 
 
 def game_loop(server_address: str, player_name: str) -> None:
@@ -44,11 +39,12 @@ def game_loop(server_address: str, player_name: str) -> None:
     clock = pygame.time.Clock()
     running = True
     network = Network(server_address)
-    player = network.get_player()
+    player, trees = network.connect()
     if not player:
         print("No response from server")
-        running = False
+        return None
 
+    graphics_handler = GraphicsHandler()
     turret_reload_speed = 90
     turret_reload_cooldown = 0
 
@@ -59,6 +55,8 @@ def game_loop(server_address: str, player_name: str) -> None:
             if event.type == pygame.QUIT:
                 running = False
                 pygame.quit()
+                return None
+
         mouse_position = pygame.mouse.get_pos()
         player.update_turret_rotation((mouse_position[0] - width//2, mouse_position[1] - height//2))
         keys = pygame.key.get_pressed()
@@ -75,7 +73,10 @@ def game_loop(server_address: str, player_name: str) -> None:
             turret_reload_cooldown -= 1
 
         data = network.send((player, new_bullet))
-        graphics_handler.update_display(data, player.x, player.y)
+        if data:
+            graphics_handler.update_display(data, player.x, player.y, trees)
+        else:
+            running = False
 
 
 if __name__ == "__main__":
