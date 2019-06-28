@@ -49,7 +49,7 @@ def game_loop(server_address: str, player_name: str) -> None:
         print("No response from server")
         running = False
 
-    turret_reload_speed = 90
+    turret_reload_speed = 0
     turret_reload_cooldown = 0
 
     while running:

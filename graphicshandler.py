@@ -22,7 +22,7 @@ class GraphicsHandler:
 		pygame.display.update()
 
 	def draw_background(self):
-		self.screen.blit(self.sprites_container.background_sprite, (0, 0))
+		self.screen.fill((0,0,0))#blit(self.sprites_container.background_sprite, (0, 0))
 
 	def draw_tanks(self, tank_data):
 		for tank in tank_data.values():
