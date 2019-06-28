@@ -1,6 +1,6 @@
 import pygame
 from typing import Tuple
-from math import sin, cos, atan2, pi, atan
+from math import sin, cos, atan2, pi
 
 
 class Tank:
