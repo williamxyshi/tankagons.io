@@ -13,6 +13,8 @@ Tasks completed:
 -hitboxes(bullet to tank)
 
 TODO in terms of priority:
+-HITBOX MISALIGNED WITH WHATS ACTUALLY ON THE TANK
+
 
 -minimap - mathieu
 -bullet to tree collision and refine hitbox (bullet shooting out the side) - mathieu
