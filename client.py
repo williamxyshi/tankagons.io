@@ -4,6 +4,7 @@ import pickle
 from projectiles import Bullet
 from graphicshandler import GraphicsHandler
 from menu import create_menu
+from math import sin, cos
 
 port = 5555
 width = 1440
@@ -66,7 +67,7 @@ def game_loop(server_address: str, player_name: str) -> None:
         mouse_pressed = pygame.mouse.get_pressed()
         new_bullet = None
         if mouse_pressed[0] and turret_reload_cooldown == 0:
-            new_bullet = Bullet(player.x, player.y, player.turret_rotation)
+            new_bullet = Bullet(player.x + 60 * cos(player.turret_rotation), player.y - 60 * sin(player.turret_rotation), player.turret_rotation)
             turret_reload_cooldown = turret_reload_speed
 
         if turret_reload_cooldown != 0:

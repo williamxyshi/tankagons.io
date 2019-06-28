@@ -45,31 +45,18 @@ class Tank:
         self.update_hitbox()
 
     def update_hitbox(self):
-        x1 = -1*self.img_width/2
-        y1 = self.img_height/2
+        rotation = abs(self.body_rotation - 2*pi)
+        half_width = self.img_width//2
+        half_height = self.img_height//2
 
-        x1a = x1 * cos(self.body_rotation) - y1 * sin(self.body_rotation) + self.x
-        y1a = y1 * cos(self.body_rotation) + x1 * sin(self.body_rotation) + self.y
+        self.hitbox.update_location(self.rotate_point(-half_width, half_height, rotation),
+                                    self.rotate_point(half_width, half_height, rotation),
+                                    self.rotate_point(half_width, -half_height, rotation),
+                                    self.rotate_point(-half_width, -half_height, rotation))
 
-        x2 = self.img_width/2
-        y2 = self.img_height/2
-
-        x2a = x2 * cos(self.body_rotation) - y2 * sin(self.body_rotation) + self.x
-        y2a = y2 * cos(self.body_rotation) + x2 * sin(self.body_rotation) + self.y
-
-        x3 = self.img_width / 2
-        y3 = -1*self.img_height / 2
-
-        x3a = x3 * cos(self.body_rotation) - y3 * sin(self.body_rotation) + self.x
-        y3a = y3 * cos(self.body_rotation) + x3 * sin(self.body_rotation) + self.y
-
-        x4 = -1*self.img_width / 2
-        y4 = -1*self.img_height / 2
-
-        x4a = x4 * cos(self.body_rotation) - y4 * sin(self.body_rotation) + self.x
-        y4a = y4 * cos(self.body_rotation) + x4 * sin(self.body_rotation) + self.y
-
-        self.hitbox.update_location((x1a, y1a), (x2a, y2a), (x3a, y3a), (x4a, y4a))
+    def rotate_point(self, x: int, y: int, rotation: float) -> Tuple[int, int]:
+        return int(x * cos(rotation) - y * sin(rotation) + self.x), \
+               int(y * cos(rotation) + x * sin(rotation) + self.y)
 
     def detect_hit(self, point_1) -> bool:
         return self.hitbox.detect_hit_bullet(point_1)

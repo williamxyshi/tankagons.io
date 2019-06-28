@@ -1,40 +1,31 @@
+from typing import Tuple
 
 
 class Hitbox:
     def __init__(self):
-        self.x1 = 0
-        self.y1 = 0
+        self.vertex1 = (0, 0)
+        self.vertex2 = (0, 0)
+        self.vertex3 = (0, 0)
+        self.vertex4 = (0, 0)
 
-        self.x2 = 0
-        self.y2 = 0
+    def update_location(self, vertex1, vertex2, vertex3, vertex4):
+        self.vertex1 = vertex1
+        self.vertex2 = vertex2
+        self.vertex3 = vertex3
+        self.vertex4 = vertex4
 
-        self.x3 = 0
-        self.y3 = 0
+    def detect_hit_bullet(self, point: Tuple[float, float]) -> bool:
+        point_x = int(point[0])
+        point_y = int(point[1])
+        return is_angle_convex(self.vertex1[0] - point_x, self.vertex1[1] - point_y,
+                               self.vertex2[0] - point_x, self.vertex2[1] - point_y) and \
+            is_angle_convex(self.vertex2[0] - point_x, self.vertex2[1] - point_y,
+                            self.vertex3[0] - point_x, self.vertex3[1] - point_y) and \
+            is_angle_convex(self.vertex3[0] - point_x, self.vertex3[1] - point_y,
+                            self.vertex4[0] - point_x, self.vertex4[1] - point_y) and \
+            is_angle_convex(self.vertex4[0] - point_x, self.vertex4[1] - point_y,
+                            self.vertex1[0] - point_x, self.vertex1[1] - point_y)
 
-        self.x4 = 0
-        self.y4 = 0
 
-    def update_location(self, vertex_1, vertex_2, vertex_3, vertex_4):
-        self.x1 = vertex_1[0]
-        self.y1 = vertex_1[1]
-
-        self.x2 = vertex_2[0]
-        self.y2 = vertex_2[1]
-
-        self.x3 = vertex_3[0]
-        self.y3 = vertex_3[1]
-
-        self.x4 = vertex_4[0]
-        self.y4 = vertex_4[1]
-
-    def detect_hit_bullet(self, point_1) -> bool:
-        hit = True
-        if (self.x4 - self.x1)*(point_1[1]-self.x1) - (point_1[0]-self.x1)*(self.y4-self.y1) < 0:
-            hit = False
-        if (self.x3 - self.x4)*(point_1[1]-self.x4) - (point_1[0]-self.x4)*(self.y3-self.y4) < 0:
-            hit = False
-        if (self.x2 - self.x3)*(point_1[1]-self.x3) - (point_1[0]-self.x3)*(self.y2-self.y3) < 0:
-            hit = False
-        if (self.x1 - self.x2)*(point_1[1]-self.x2) - (point_1[0]-self.x2)*(self.y1-self.y2) < 0:
-            hit = False
-        return hit
+def is_angle_convex(x1: int, y1: int, x2: int, y2: int) -> bool:
+    return x2*y1 - x1*y2 > 0
