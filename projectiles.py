@@ -1,10 +1,10 @@
-from math import sin, cos, atan2, pi
+from math import sin, cos
 
 bullet_speed = 10
 
 
 class Bullet:
-    def __init__(self, x :int, y:int, turret_angle :int):
+    def __init__(self, x: int, y: int, turret_angle: int):
         self.x = x
         self.y = y
         self.bullet_angle = turret_angle

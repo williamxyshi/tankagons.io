@@ -1,6 +1,7 @@
 import socket
 from _thread import *
 from tank import Tank
+from objects import Tree
 import pickle
 from random import randint
 import pygame
@@ -10,6 +11,7 @@ server = "25.3.163.186"  # IPV4 Address
 port = 5555  # 5555
 
 data = {"tanks": {}, "bullets": []}
+trees = {}
 
 tank_body_image_size = pygame.image.load(os.path.join(os.path.dirname(__file__), 'assets\\basetank.png')).get_size()
 
@@ -19,7 +21,7 @@ def threaded_client(connection, player_number):
     connected = True
     new_tank = Tank(100, 100, 10, (randint(0, 255), randint(0, 255), randint(0, 255)), 'basic', 'basic', tank_body_image_size[0], tank_body_image_size[1])
     data["tanks"][player_number] = new_tank
-    connection.send(pickle.dumps(new_tank))
+    connection.send(pickle.dumps((new_tank, trees)))
 
     while connected:
         try:
@@ -44,6 +46,14 @@ def threaded_client(connection, player_number):
     connection.close()
 
 
+def create_map(map_width: int, map_height: int):
+    num_trees = randint(20, 40)
+    for _ in range(num_trees):
+        x = randint(20, map_width-20)
+        y = randint(20, map_height-20)
+        trees[(x, y)] = Tree(x, y, 0, randint(30, 50))
+
+
 def server_loop():
     fps = 60
     clock = pygame.time.Clock()
@@ -63,6 +73,8 @@ def server_loop():
 
 
 if __name__ == "__main__":
+    create_map(1500, 1500)
+
     # Create the server socket
     s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
     try:

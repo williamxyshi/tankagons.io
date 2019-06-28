@@ -13,12 +13,13 @@ class GraphicsHandler:
 		self.screen = pygame.display.set_mode((width, height))
 		pygame.display.set_caption("Tankagons")
 
-	def update_display(self, data, x_offset, y_offset):
-		self.draw_background()
+	def update_display(self, data, x_offset, y_offset, trees):
+		self.screen.fill((60, 112, 45))
 		self.x_offset = x_offset
 		self.y_offset = y_offset
 		self.draw_tanks(data["tanks"])
 		self.draw_bullets(data["bullets"])
+		self.draw_trees(trees)
 		pygame.display.update()
 
 	def draw_background(self):
@@ -32,6 +33,18 @@ class GraphicsHandler:
 	def draw_bullets(self, bullet_data):
 		for bullet in bullet_data:
 			self.draw_bullet(bullet.x - self.x_offset + width//2, bullet.y - self.y_offset + height//2, bullet.bullet_angle)
+
+	def draw_trees(self, trees):
+		x_offset = int(self.x_offset)
+		y_offset = int(self.y_offset)
+		leftmost = x_offset - width // 2
+		rightmost = x_offset + width // 2
+		topmost = y_offset - height // 2
+		bottommost = y_offset + height // 2
+
+		for tree in trees.values():
+			if (leftmost <= tree.x <= rightmost) and (topmost <= tree.y <= bottommost):
+				pygame.draw.circle(self.screen, (145, 103, 70), (tree.x-leftmost, tree.y-topmost), tree.radius)
 
 	def draw_bullet(self, x: int, y: int, bullet_angle: int):
 		bullet_image = self.sprites_container.bullet_sprites['bullet']
