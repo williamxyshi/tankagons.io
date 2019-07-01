@@ -11,13 +11,13 @@ Tasks completed:
 -mouse tracking
 -login page
 -hitboxes(bullet to tank)
+-HITBOX MISALIGNED WITH WHATS ACTUALLY ON THE TANK
+-minimap
+-refined hitbox
 
 TODO in terms of priority:
--HITBOX MISALIGNED WITH WHATS ACTUALLY ON THE TANK
 
-
--minimap - mathieu
--bullet to tree collision and refine hitbox (bullet shooting out the side) - mathieu
+-bullet to tree collision
 
 -physics engine for collisions
 -art (alphabet and icons)
