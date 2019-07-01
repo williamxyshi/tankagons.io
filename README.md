@@ -30,7 +30,6 @@ Backlog:
 -hitboxes(tank to tank and tank to tree and bullet to tree etc)
 -physics engine
 -classes
--enemy's + AI
 -more weapon types (missles with pathfinding)
 
 Spawn into a procedurely generated map and fight other players for domination. Protect your spawnpoint while destroying those of your enemies. Farm mobs to increase in strength. 
