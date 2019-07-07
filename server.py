@@ -6,14 +6,16 @@ import pickle
 from random import randint
 import pygame
 import os
+import queue
 
-server = "25.11.222.189"  # IPV4 Address
+server = "25.3.163.186"  # IPV4 Address
 port = 5555  # 5555
 
 data = {"tanks": {}, "bullets": []}
 trees = {}
 
 tank_body_image_size = pygame.image.load(os.path.join(os.path.dirname(__file__), 'assets\\basetank.png')).get_size()
+tank_damage = queue.Queue()
 
 
 def threaded_client(connection, player_number):
@@ -21,9 +23,13 @@ def threaded_client(connection, player_number):
     connected = True
     new_tank = Tank(100, 100, 10, (randint(0, 255), randint(0, 255), randint(0, 255)), 'basic', 'basic', tank_body_image_size[0], tank_body_image_size[1])
     data["tanks"][player_number] = new_tank
-    connection.send(pickle.dumps((new_tank, trees)))
+    connection.send(pickle.dumps((new_tank, trees, player_number)))
 
     while connected:
+        while not tank_damage.empty():
+            damage_info = tank_damage.get()
+            data["tanks"][player_number] = damage_info[0].update_health(10)
+
         try:
             received_data = pickle.loads(connection.recv(4096))  # Increasing bits lowers speed
             data["tanks"][player_number] = received_data[0]
@@ -61,13 +67,12 @@ def server_loop():
     while running:
         clock.tick(fps)
         for bullet in data["bullets"]:
-            if bullet.update():
-                data["bullets"].remove(bullet)
-
-        for tank in data["tanks"].values():
-            for bullet in data["bullets"]:
-                if tank.detect_hit((bullet.x, bullet.y)):
-                    data["bullets"].remove(bullet)
+            if not bullet.update():
+                for tank in data["tanks"].values():
+                    if tank.detect_hit((bullet.x, bullet.y)):
+                        data["bullets"].remove(bullet)
+                        tank_damage.put((tank, bullet.damage))
+                        print(tank.health)
 
 
 if __name__ == "__main__":

@@ -14,6 +14,8 @@ class Bullet:
         self.x_velocity = bullet_speed * cos(turret_angle)
         self.y_velocity = -(bullet_speed * sin(turret_angle))
 
+        self.damage = 90
+
     def update(self) -> bool:
         self.x += self.x_velocity
         self.y += self.y_velocity

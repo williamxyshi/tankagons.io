@@ -1,6 +1,7 @@
 import pygame
 from sprites import SpritesContainer
 from math import degrees
+import math
 width = 1440
 height = 900
 
@@ -13,13 +14,14 @@ class GraphicsHandler:
 		self.screen = pygame.display.set_mode((width, height))
 		pygame.display.set_caption("Tankagons")
 
-	def update_display(self, data, x_offset, y_offset, trees):
+	def update_display(self, data, x_offset, y_offset, trees, health):
 		self.screen.fill((60, 112, 45))
 		self.x_offset = x_offset
 		self.y_offset = y_offset
 		self.draw_tanks(data["tanks"])
 		self.draw_bullets(data["bullets"])
 		self.draw_trees(trees)
+		self.draw_health_bar(health)
 		pygame.display.update()
 
 	def draw_background(self):
@@ -63,3 +65,19 @@ class GraphicsHandler:
 		body_image = pygame.transform.rotate(body_image, degrees(body_rotation))
 		image_size = body_image.get_size()
 		self.screen.blit(body_image,  (x - image_size[0] // 2, y - image_size[1] // 2))
+
+	def draw_health_bar(self, health: int):
+		"""if n > 0:
+			digits = int(math.log10(health))+1
+		elif n == 0:
+			digits = 1"""  #use if i ever want to remove the 0
+
+		health_width = int(max(min(health / float(100) * 1000, 1000), 0))
+		damage_width = 1000 - health_width
+
+		pygame.draw.rect(self.screen, (255, 255, 255), (0, 850, health_width, 50), 0)
+		pygame.draw.rect(self.screen, (0, 0, 0), (health_width, 850, damage_width, 50), 0)
+
+
+
+

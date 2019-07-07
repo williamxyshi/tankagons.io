@@ -3,6 +3,7 @@ import socket
 import pickle
 from projectiles import Bullet
 from graphicshandler import GraphicsHandler
+from playerinfo import PlayerInfo
 from menu import create_menu
 from math import sin, cos
 
@@ -40,12 +41,13 @@ def game_loop(server_address: str, player_name: str) -> None:
     clock = pygame.time.Clock()
     running = True
     network = Network(server_address)
-    player, trees = network.connect()
+    player, trees, player_number = network.connect()
     if not player:
         print("No response from server")
         return None
 
     graphics_handler = GraphicsHandler()
+    player_info = PlayerInfo()
     turret_reload_speed = 90
     turret_reload_cooldown = 0
 
@@ -75,7 +77,9 @@ def game_loop(server_address: str, player_name: str) -> None:
 
         data = network.send((player, new_bullet))
         if data:
-            graphics_handler.update_display(data, player.x, player.y, trees)
+            print(data["tanks"][player_number].health)
+            player_info.update_player_health(data["tanks"][player_number].shields, data["tanks"][player_number].health)
+            graphics_handler.update_display(data, player.x, player.y, trees, player_info.player_health)
         else:
             running = False
 

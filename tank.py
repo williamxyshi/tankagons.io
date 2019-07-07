@@ -21,6 +21,9 @@ class Tank:
         self.hitbox = Hitbox()
         self.update_hitbox()
 
+        self.health = 100
+        self.shields = 50
+
     def draw(self, window: pygame.display) -> None:
         pygame.draw.circle(window, self.color, (self.x, self.y), self.radius)
         pygame.draw.line(window, self.color, (self.x, self.y), (self.x+15*cos(self.turret_rotation), self.y+15*sin(self.turret_rotation)), 3)
@@ -67,3 +70,5 @@ class Tank:
     def update_turret_rotation(self, mouse_pos: Tuple[int, int]) -> None:
         self.turret_rotation = -atan2(mouse_pos[1], mouse_pos[0])
 
+    def update_health(self, damage):
+        self.health -= damage
