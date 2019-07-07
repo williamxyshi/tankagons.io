@@ -17,6 +17,8 @@ Tasks completed:
 
 TODO in terms of priority:
 
+-added a healthbar except it does not update
+
 -bullet to tree collision
 
 -physics engine for collisions
