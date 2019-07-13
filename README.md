@@ -25,6 +25,13 @@ TODO in terms of priority:
 -art (alphabet and icons)
 
 
+Physics Engine plan::
+2 cases: a collision with the side of the tank or a collision with a vertex of the tank
+For the side of tank, calculate the perpendicular bisector the edge of the tank makes with the center of the circle
+
+
+
+
 Backlog:
 
 -minimap
