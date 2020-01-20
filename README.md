@@ -1,6 +1,10 @@
 # tankagons.io
 a game worked on by me and masea3439
 
+An online multiplayer FFA tank game. Modeled after popular browser game Diep.IO, except we're implementing base building and more dynamic enemies
+
+
+
 Tasks completed:
 
 -Multiplayer support
